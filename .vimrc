@@ -1,8 +1,7 @@
-
 "
 " enable syntax highlighting
-syntax on
-syntax enable
+" syntax on
+" syntax enable
 
 " show line numbers
 set number
@@ -10,6 +9,7 @@ set number
 " set tabs to have 4 spaces
 set ts=4
 set tabstop=4
+set listchars:tab:--,trail:-
 
 " indent when moving to the next line while writing code
 set autoindent
@@ -70,10 +70,12 @@ Plugin 'git://git.wincent.com/command-t.git'
 " Plugin 'file:///home/gmarik/path/to/plugin'
 
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'airblade/vim-gitgutter'
 
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
@@ -98,17 +100,18 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 "" NERDTree
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
 " map <C-n> :NERDTreeToggle<CR>
 map <F2> :NERDTreeToggle<CR>
-let g:nerdtree_tabs_open_on_console_startup=1
+" let g:nerdtree_tabs_open_on_console_startup=0
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 let NERDTreeShowLineNumbers=1
+let NERDTreeShowHidden=1
 
 """""""""""
 
@@ -117,9 +120,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_python_exe = 'python3'
@@ -146,3 +149,22 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 """"""""""
+
+""" vimscript
+""" let g:NERDTreeIndicatorMapCustom = {
+"""     \ 'Modified'  : '✹',
+"""     \ 'Staged'    : '✚',
+"""     \ 'Untracked' : '✭',
+"""     \ 'Renamed'   : '➜',
+"""     \ 'Unmerged'  : '═',
+"""     \ 'Deleted'   : '✖',
+"""     \ 'Dirty'     : '✗',
+"""     \ 'Clean'     : '✔︎',
+"""     \ 'Ignored'   : '☒',
+"""     \ 'Unknown'   : '?'
+"""     \ }
+""" """"""""""
+
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+
